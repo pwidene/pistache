@@ -186,12 +186,13 @@ if get_option('PISTACHE_USE_SSL')
 endif
 
 if host_machine.system() == 'darwin' or host_machine.system() == 'windows' or host_machine.system().endswith('bsd') or get_option('PISTACHE_FORCE_LIBEVENT')
-	deps_libpistache += dependency('libevent')
+	deps_libpistache += dependency('libevent', modules: ['libevent::core', 'libevent::extra', 'libevent::openssl']))
         if (not (host_machine.system() == 'windows'))
                 # It looks like libevent assumes windows threads in
                 # windows, at least by default, and libevent_pthreads
                 # is not built on windows
-                deps_libpistache += dependency('libevent_pthreads')
+       #         deps_libpistache += dependency('libevent_pthreads')
+		deps_libpistache += dependency('libevent', modules: 'libevent::pthreads')
         endif
 endif
 
